@@ -82,7 +82,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		
 		}
 
-		if(strtolower(strpos($userMessage, "ll") !== false))
+		if(strpos($userMessage, "ll") !== false)
 		{
 			$message = "Positivity detected. Nice.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
