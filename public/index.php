@@ -75,20 +75,20 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 		if(strtolower($userMessage) == 'test')
 		{
-			$message = "Your test was successfull. Awesome!";
+			$message = "Your test was successful. Awesome!";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 		
 		}
 
-		if(strpos($userMessage, 'positive') !== false)
+		if(strpos($userMessage, "ll") !== false)
 		{
 			$message = "Positivity detected. Nice.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-			
+
 		}
 
 	}
