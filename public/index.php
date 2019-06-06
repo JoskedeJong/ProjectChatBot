@@ -107,7 +107,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 					'text' => "I've got a letter in mind. Take a guess!"
 				)
 			);
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($messages);
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder($messages);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
 			$letterOptions = array("a", "b", "c");
