@@ -100,7 +100,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
-			$playingHangman = true;
+			$playingHangman = 1;
 			$letterOptions = array("a", "b", "c");
 			$letterToGuess = array_rand($letterOptions, $num = 1); 									//code to set variable letterToGuess to random letter a, b, or c.
 	
@@ -111,14 +111,14 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		
 		}
 
-		if((strtolower($userMessage) == 'letterToGuess') && ($playingHangman == true))
+		if((strtolower($userMessage) == 'letterToGuess') && ($playingHangman == 1))
 		{
 			$message = "You guessed right! Congratulations";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 
-			$playingHangman = false;
+			$playingHangman = 0;
 			$letterToGuess = '';
 
 			$message = "That concludes our game of Hangman. Thanks for playing.";
@@ -129,9 +129,9 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		}
 		
 
-		if((strtolower($userMessage) == 'stop') && ($playingHangman == true))
+		if((strtolower($userMessage) == 'stop') && ($playingHangman == 1))
 		{
-			$playingHangman = false;
+			$playingHangman = 0;
 			$letterToGuess = '';
 
 			$message = "I've stopped out game of Hangman. Thanks for playing.";
