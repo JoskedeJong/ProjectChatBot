@@ -112,7 +112,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		
 		}
 
-		if(strtolower($userMessage) == ('letterToGuess' && ($playingHangman == true)))
+		if((strtolower($userMessage) == 'letterToGuess') && ($playingHangman == true))
 		{
 			$message = "You guessed right! Congratulations";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
@@ -130,7 +130,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		}
 		
 
-		if(strtolower($userMessage) == 'stop' && ($playingHangman == true))
+		if((strtolower($userMessage) == 'stop') && ($playingHangman == true))
 		{
 			$playingHangman = false;
 			$letterToGuess = '';
