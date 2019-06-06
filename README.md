@@ -10,7 +10,14 @@ Note: The PHP-base for this bot was pre-made, with expansions created by me.
 * [x] set up initial documents
 * [x] set up basic bot with PHP documents provided by coach
 * [x] create test response in php document
-* [ ] create response if input contains certain word
+* [x] create response if input contains certain word
+* [x] Get the perview app up and running in LIFF
+* [x] Get one of my own apps (hangman) up and running in LIFF
+* - internal workings are now broken, as none of the letters ge accepted
+* [ ] program hangman natively in PHP file
+* * [ ] get bot to evaluate single letter input
+* * [ ] 
+* * [ ] 
 * [ ] create JSON style file with LIFF
 * [ ] get the PHP file to read the JSON file created in the above step
 * [ ] 

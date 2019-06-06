@@ -91,6 +91,58 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 		}
 
+		// ---------------------------------------------------------------------------------------- hangman ----------------------------------------------------------------------
+
+		if(strtolower($userMessage) == 'hangman')
+		{
+			$playingHangman = true;
+
+			$message = "Let\'s play a game of hangman.";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+			
+			//code to set variable letterToGuess to random letter a, b, or c.
+			$letterOptions = array("a", "b", "c");
+			$letterToGuess = array_rand($letterOptions, $num = 1);
+	
+			$message = "I\'ve got a letter in mind. Take a guess!";
+			$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+		
+		}
+
+		if(strtolower($userMessage) == ('letterToGuess' && ($playingHangman == true)))
+		{
+			$message = "You guessed right! Congratulations";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+			$playingHangman = false;
+			$letterToGuess = '';
+
+			$message = "I've stopped out game of Hangman. Thanks for playing.";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		}
+		
+
+		if(strtolower($userMessage) == 'stop' && ($playingHangman == true))
+		{
+			$playingHangman = false;
+			$letterToGuess = '';
+
+			$message = "I've stopped out game of Hangman. Thanks for playing.";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		}
+
 	}
 	
 
