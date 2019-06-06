@@ -95,13 +95,12 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 		if(strtolower($userMessage) == 'hangman')
 		{
-			$playingHangman = true;
-
 			$message1 = "Lets play a game of Hangman.";
 			$message2 = "I've got a letter in mind. Take a guess!";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder($message1, $message2);
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
+			$playingHangman = true;
 			$letterOptions = array("a", "b", "c");
 			$letterToGuess = array_rand($letterOptions, $num = 1); 									//code to set variable letterToGuess to random letter a, b, or c.
 	
