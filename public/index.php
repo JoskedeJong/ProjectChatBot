@@ -100,15 +100,10 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
-			$playingHangman = true;
-			$letterOptions = array("a", "b", "c");
-			$letterToGuess = array_rand($letterOptions, $num = 1); 									//code to set variable letterToGuess to random letter a, b, or c.
-	
-			// $message2 = "I've got a letter in mind. Take a guess!";
-			// $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
-			// $result = $bot->replyMessage($textMessageBuilder);
-			// return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-		
+			// $playingHangman = true;																	// does not work - find way to get these on a file
+			// $letterOptions = array("a", "b", "c");
+			// $letterToGuess = array_rand($letterOptions, $num = 1); 									// code to set variable letterToGuess to random letter a, b, or c.
+
 		}
 
 		if((strtolower($userMessage) == $letterToGuess) && ($playingHangman == true))
@@ -118,8 +113,8 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 
-			$playingHangman = false;
-			$letterToGuess = '';
+			// $playingHangman = false;																	// does not work - find way to get these on a file
+			// $letterToGuess = '';
 
 			$message = "That concludes our game of Hangman. Thanks for playing.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
@@ -131,8 +126,8 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 		if((strtolower($userMessage) == 'stop') && ($playingHangman == true))
 		{
-			$playingHangman = false;
-			$letterToGuess = '';
+			// $playingHangman = false;																	// does not work - find way to get these on a file
+			// $letterToGuess = '';
 
 			$message = "I've stopped out game of Hangman. Thanks for playing.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
