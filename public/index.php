@@ -100,12 +100,13 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 			$messages = array(
 				array(
 					'type' => 'text',
-					'text' => "Let's play a game of hangman.";
+					'text' => "Let's play a game of hangman."
 				),
 				array(
 					'type' => 'text',
 					'text' => "I've got a letter in mind. Take a guess!"
 				)
+			);
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($messages);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
