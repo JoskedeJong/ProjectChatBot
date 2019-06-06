@@ -97,15 +97,25 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		{
 			$playingHangman = true;
 
-			$message = "Let's play a game of hangman.";
+			$messages = array(
+				array(
+					'type' => 'text',
+					'text' => "Let's play a game of hangman.";
+				),
+				array(
+					'type' => 'text',
+					'text' => "I've got a letter in mind. Take a guess!"
+				)
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($messages);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
 			$letterOptions = array("a", "b", "c");
 			$letterToGuess = array_rand($letterOptions, $num = 1); 									//code to set variable letterToGuess to random letter a, b, or c.
 	
-			$message2 = "I've got a letter in mind. Take a guess!";
-			$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message, $message2);
-			$result = $bot->replyMessage($textMessageBuilder);
-			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+			// $message2 = "I've got a letter in mind. Take a guess!";
+			// $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			// $result = $bot->replyMessage($textMessageBuilder);
+			// return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 		
 		}
 
