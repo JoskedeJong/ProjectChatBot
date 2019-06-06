@@ -97,17 +97,9 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		{
 			$playingHangman = true;
 
-			$messages = array(
-				array(
-					'type' => 'text',
-					'text' => "Let's play a game of hangman."
-				),
-				array(
-					'type' => 'text',
-					'text' => "I've got a letter in mind. Take a guess!"
-				)
-			);
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder($messages);
+			$message1 = "Lets play a game of Hangman.";
+			$message2 = "I've got a letter in mind. Take a guess!";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
 			$letterOptions = array("a", "b", "c");
