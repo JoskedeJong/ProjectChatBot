@@ -97,7 +97,7 @@ $signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 		{
 			$message1 = "Lets play a game of Hangman.";
 			$message2 = "I've got a letter in mind. Take a guess!";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\MessageBuilder($message1, $message2);
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
 			$playingHangman = true;
