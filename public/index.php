@@ -108,10 +108,6 @@ $app->post('/', function ($request, $response)
 			$bla = $letterOptions[$letterToGuess];
 			$_SESSION["letterToGuess"] = $bla;
 
-			// $playingHangman = true;																	// does not work - find way to get these on a file
-			// $letterOptions = array("a", "b", "c");
-			// $letterToGuess = array_rand($letterOptions, $num = 1); 									// code to set variable letterToGuess to random letter a, b, or c.
-
 		}
 
 		if((strtolower($userMessage) == "cheat") && ($_SESSION["playingHangman"] == true))
@@ -125,21 +121,17 @@ $app->post('/', function ($request, $response)
 
 		if((strtolower($userMessage) == $_SESSION["letterToGuess"]) && ($_SESSION["playingHangman"] == true))
 		{
+			$_SESSION["playingHangman"] = false;
+			$_SESSION["letterToGuess"] = "";
+			
 			$message1 = "You guessed right! Congratulations";
 			$message2 = "That concludes our game of Hangman. Thanks for playing.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-
-			$_SESSION["playingHangman"] = false;
-			$_SESSION["letterToGuess"] = "";
-
-			// $playingHangman = false;																	// does not work - find way to get these on a file
-			// $letterToGuess = '';
-
 		}
 		
-		
+		//comment
 
 		if((strtolower($userMessage) == 'stop') && ($_SESSION["playingHangman"] == true))
 		{
