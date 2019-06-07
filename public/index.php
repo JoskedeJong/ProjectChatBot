@@ -95,7 +95,7 @@ $app->post('/', function ($request, $response)
 
 		// ---------------------------------------------------------------------------------------- hangman ----------------------------------------------------------------------
 
-		if(strtolower($userMessage) == 'hangman')
+		if(strtolower($userMessage) == 'hangman')													// starts hangman, determines answer
 		{
 			$message1 = "Lets play a game of Hangman.";
 			$message2 = "I've got a letter in mind. Take a guess!";
@@ -105,12 +105,12 @@ $app->post('/', function ($request, $response)
 			$_SESSION["playingHangman"] = true;
 			$letterOptions = array("a", "b", "c");	
 			$letterToGuess = array_rand($letterOptions); //, $num = 1
-			$bla = $letterOptions[$letterToGuess];
-			$_SESSION["letterToGuess"] = $bla;
+			$definiteLetter = $letterOptions[$letterToGuess];
+			$_SESSION["letterToGuess"] = $definiteLetter;
 
 		}
 
-		if((strtolower($userMessage) == "cheat") && ($_SESSION["playingHangman"] == true))
+		if((strtolower($userMessage) == "cheat") && ($_SESSION["playingHangman"] == true))			// gives answer. CHEATS!
 		{
 			$message = "The right answer is ".$_SESSION["letterToGuess"];
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
@@ -119,8 +119,17 @@ $app->post('/', function ($request, $response)
 
 		}
 
+		if((strtolower($userMessage) !== $_SESSION["letterToGuess"]) && ($_SESSION["playingHangman"] == true))
+		{																							// response when given wrong input
+			$message = "Nope. Guess again!";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		}
+
 		if((strtolower($userMessage) == $_SESSION["letterToGuess"]) && ($_SESSION["playingHangman"] == true))
-		{
+		{																							// responste when given right input. ends game
 			$_SESSION["playingHangman"] = false;
 			$_SESSION["letterToGuess"] = "";
 			
@@ -130,16 +139,12 @@ $app->post('/', function ($request, $response)
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 		}
-		
-		//comment
 
-		if((strtolower($userMessage) == 'stop') && ($_SESSION["playingHangman"] == true))
+		if((strtolower($userMessage) == 'stop') && ($_SESSION["playingHangman"] == true))			// stops hangman
 		{
 			$_SESSION["playingHangman"] = false;
 			$_SESSION["letterToGuess"] = "";
-			// $playingHangman = false;																	// does not work - find way to get these on a file
-			// $letterToGuess = '';
-
+	
 			$message = "I've stopped our game of Hangman. Thanks for playing.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
