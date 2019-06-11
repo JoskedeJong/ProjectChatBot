@@ -14,10 +14,15 @@ Note: The PHP-base for this bot was pre-made, with expansions created by me.
 * [x] Get the perview app up and running in LIFF
 * [x] Get one of my own apps (hangman) up and running in LIFF
 * - internal workings are now broken, as none of the letters ge accepted
-* [ ] program hangman natively in PHP file
-* * [ ] get bot to evaluate single letter input
-* * [ ] 
-* * [ ] 
+* [x] program hangman natively in PHP file
+* * [x] get bot to evaluate single letter input
+* * [x] Change single letters to words
+* * [x] Make response to non-single letter input
+* * [ ] Make underscore representation of word 
+* * [ ] Make loop to check if letter imput is contained in word
+* * [ ] Make loop alter underscore representation of word
+* * [ ] Make attempt-counter
+* * [ ] Make lose response
 * [ ] create JSON style file with LIFF
 * [ ] get the PHP file to read the JSON file created in the above step
 * [ ] 

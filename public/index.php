@@ -98,21 +98,51 @@ $app->post('/', function ($request, $response)
 		if(strtolower($userMessage) == 'hangman')													// starts hangman, determines answer
 		{
 			$message1 = "Lets play a game of Hangman.";
-			$message2 = "I've got a letter in mind. Take a guess!";
+			$message2 = "I've got a word in mind. Take a guess!";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			
 			$_SESSION["playingHangman"] = true;
-			$letterOptions = array("a", "b", "c");	
+			$letterOptions = array("ab", "cd", "ef");	
 			$letterToGuess = array_rand($letterOptions); //, $num = 1
 			$definiteLetter = $letterOptions[$letterToGuess];
 			$_SESSION["letterToGuess"] = $definiteLetter;
 
 		}
 
+		if((strtolower($userMessage) == 'stop') && ($_SESSION["playingHangman"] == true))			// stops hangman
+		{
+			$_SESSION["playingHangman"] = false;
+			$_SESSION["letterToGuess"] = "";
+	
+			$message = "I've stopped our game of Hangman. Thanks for playing.";
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		}
+
 		if((strtolower($userMessage) == "cheat") && ($_SESSION["playingHangman"] == true))			// gives answer. CHEATS!
 		{
 			$message = "The right answer is ".$_SESSION["letterToGuess"];
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		}
+
+		// if($_SESSION["playingHangman"] == true)
+		// {																							// response when given multi-letter input
+		// 	$message = "your response is ".(strlen($userMessage))." letters long";
+        //     $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+		// 	$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+		// 	return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+
+		// }
+
+		if((strlen($userMessage) > 1) && ($_SESSION["playingHangman"] == true))
+		{																							// response when given multi-letter input
+			$message = "One letter at the time.";
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
@@ -138,18 +168,6 @@ $app->post('/', function ($request, $response)
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-		}
-
-		if((strtolower($userMessage) == 'stop') && ($_SESSION["playingHangman"] == true))			// stops hangman
-		{
-			$_SESSION["playingHangman"] = false;
-			$_SESSION["letterToGuess"] = "";
-	
-			$message = "I've stopped our game of Hangman. Thanks for playing.";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
-			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-
 		}
 
 	}
