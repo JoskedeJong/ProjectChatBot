@@ -97,16 +97,23 @@ $app->post('/', function ($request, $response)
 
 		if(strtolower($userMessage) == 'hangman')													// starts hangman, determines answer
 		{
-			$message1 = "Lets play a game of Hangman.";
-			$message2 = "I've got a word in mind. Take a guess!";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
-			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-			
-			$_SESSION["playingHangman"] = true;
-			$letterOptions = array("ab", "cd", "ef");	
+			$_SESSION["playingHangman"] = true;														// picks answer from array of options
+			$letterOptions = array("ab", "cde", "fghi");	
 			$letterToGuess = array_rand($letterOptions); //, $num = 1
 			$definiteLetter = $letterOptions[$letterToGuess];
 			$_SESSION["letterToGuess"] = $definiteLetter;
+			$underscore = array();
+
+			for ($i=0; $i < strlen($_SESSION["letterToGuess"]); $i++) {								// makes underscored preview of word
+				array_push($underscore, "_");
+				$_SESSION["underscores"] = implode(" ", $underscore);
+			}
+
+			$message1 = "Lets play a game of Hangman.";
+			$message2 = "I've got a word in mind. Here it is: ".$_SESSION["underscores"];
+			$message3 = "Take a guess!";
+			$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2, $message3);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
 		}
 
@@ -131,9 +138,9 @@ $app->post('/', function ($request, $response)
 
 		}
 
-		// if($_SESSION["playingHangman"] == true)
-		// {																							// response when given multi-letter input
-		// 	$message = "your response is ".(strlen($userMessage))." letters long";
+		// if($_SESSION["playingHangman"] == true)														// for testing
+		// {
+		// 	$message = "The output is ".strlen($_SESSION["letterToGuess"]);
         //     $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 		// 	$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 		// 	return $result->getHTTPStatus() . ' ' . $result->getRawBody();

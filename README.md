@@ -18,7 +18,7 @@ Note: The PHP-base for this bot was pre-made, with expansions created by me.
 * * [x] get bot to evaluate single letter input
 * * [x] Change single letters to words
 * * [x] Make response to non-single letter input
-* * [ ] Make underscore representation of word 
+* * [x] Make underscore representation of word 
 * * [ ] Make loop to check if letter imput is contained in word
 * * [ ] Make loop alter underscore representation of word
 * * [ ] Make attempt-counter
