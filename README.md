@@ -20,7 +20,8 @@ Note: The PHP-base for this bot was pre-made, with expansions created by me.
 * * [x] Make response to non-single letter input
 * * [x] Make underscore representation of word 
 * * [x] Make loop to check if letter imput is contained in word
-* * [ ] Make loop alter underscore representation of word
+* * [x] Make loop alter underscore representation of word
+* * * updated win as well
 * * [ ] Make attempt-counter
 * * [ ] Make lose response
 * [ ] create JSON style file with LIFF
@@ -28,6 +29,6 @@ Note: The PHP-base for this bot was pre-made, with expansions created by me.
 * [ ] 
 
 #### Personal goals
-* [ ] get a first taste of PHP in action
-* [ ] get a good amount of experience with creating a chatbot
+* [x] get a first taste of PHP in action
+* [x] get a good amount of experience with creating a chatbot
 * [ ] get skilled with using LIFF

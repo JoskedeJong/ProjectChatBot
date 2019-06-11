@@ -98,7 +98,7 @@ $app->post('/', function ($request, $response)
 		if(strtolower($userMessage) == 'hangman')													// starts hangman, determines answer
 		{
 			$_SESSION["playingHangman"] = true;														
-			$wordOptions = array("ab", "cde", "fghi");	
+			$wordOptions = array("aba", "cdec", "fghif");	
 			$wordToGuess = array_rand($wordOptions); //, $num = 1
 			$_SESSION["wordToGuess"] = $wordOptions[$wordToGuess];
 
@@ -159,26 +159,42 @@ $app->post('/', function ($request, $response)
 
 		}
 
-		if((strlen($userMessage) == 1) && ($_SESSION["playingHangman"] == true)){
+		if((strlen($userMessage) == 1) 
+		&& (strpos($_SESSION["wordToGuess"], strtolower($userMessage)) !== false) 
+		&& ($_SESSION["playingHangman"] == true)){
 
-			for ($i = 0; $i < strlen($_SESSION["wordToGuess"]); $i++)
+			for ($i = 0; $i < strlen($_SESSION["wordToGuess"]); $i++){								// replace entry 'underscoresArray' with entry 'wordArray' of same index
+				if ($_SESSION["wordArray"][$i] == strtolower($userMessage)){
+					$_SESSION["underscoreArray"][$i] = $_SESSION["wordArray"][$i];		
+				}					
+			}
+				
+			if ($_SESSION["underscoreArray"] == $_SESSION["wordArray"]){							// win-check
 
-			if(strtolower($userMessage) == $_SESSION["wordArray"][$i])
-			{																							// responste when given right input. ends game
 				$_SESSION["playingHangman"] = false;
 				$_SESSION["wordToGuess"] = "";
-				
-				$message1 = "You guessed right! Congratulations";
+
+				$message1 = "You guessed right! The word was ".strtoupper(implode($_SESSION["underscoreArray"])).". Congratulations.";
 				$message2 = "That concludes our game of Hangman. Thanks for playing.";
 				$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
 				$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 				return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 			}
+			else {																					// correct guess mesage
+				$message1 = "You guessed right!";													
+				$message2 = "Here's what you've guessed so far: ".implode(" ", $_SESSION["underscoreArray"]);
+				$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message1, $message2);
+				$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+				return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+			}
+			
 		}
 	
 
 		if((strpos($_SESSION["wordToGuess"], strtolower($userMessage)) == false) && ($_SESSION["playingHangman"] == true))
 		{																								// response when given wrong input
+			// check for loss, else
+			
 			$message = "Nope. Guess again!";
 			$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
 			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
